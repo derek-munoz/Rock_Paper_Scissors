@@ -111,6 +111,10 @@ function main() {
     })
 }
 
+function startGame() {
+    document.getElementById('introScreen').style.display = 'none';
+}
+
 main();
 
 
