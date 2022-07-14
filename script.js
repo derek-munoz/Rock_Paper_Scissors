@@ -6,6 +6,7 @@ const playerScore_span = document.getElementById("player-score");
 const enemyScore_span = document.getElementById("enemy-score");
 const scoreBoard_div = document.querySelector(".score_board");
 const result_p = document.querySelector(".result > p");
+const ending = document.querySelector(".txtEndTitle");
 const rock_div = document.getElementById("r");
 const paper_div = document.getElementById("p");
 const scissors_div = document.getElementById("s");
@@ -44,8 +45,13 @@ function victory(player) {
     result_p.innerHTML = `${convertToWord(player)} CLAIMS VICTORY`;
     document.getElementById(player).classList.add('green-glow');
     setTimeout(() => document.getElementById(player).classList.remove('green-glow'), 500);
-    document.getElementById('e').classList.add('red-glow');
-    setTimeout(() => document.getElementById('e').classList.remove('red-glow'), 500);
+    document.getElementById('borderE').classList.add('red-glow');
+    setTimeout(() => document.getElementById('borderE').classList.remove('red-glow'), 500);
+
+    if( playerScore == 3){
+        document.getElementById('endScreen').style.display = 'block';
+        txtEndTitle.innerHTML = 'VICTORY';
+    }
 }
 
 function loss(player) {
@@ -55,8 +61,13 @@ function loss(player) {
     result_p.innerHTML = `${convertToWord(player)} LOSSES`;
     document.getElementById(player).classList.add('red-glow');
     setTimeout(() => document.getElementById(player).classList.remove('red-glow'), 500);
-    document.getElementById('e').classList.add('green-glow');
-    setTimeout(() => document.getElementById('e').classList.remove('green-glow'), 500);
+    document.getElementById('borderE').classList.add('green-glow');
+    setTimeout(() => document.getElementById('borderE').classList.remove('green-glow'), 500);
+
+    if( enemyScore == 3){
+        document.getElementById('endScreen').style.display = 'block';
+        txtEndTitle.innerHTML = 'YOU LOOSE';
+    }
 }
 
 function draw(player) {
@@ -64,8 +75,8 @@ function draw(player) {
     result_p.innerHTML = `DRAW`;
     document.getElementById(player).classList.add('grey-glow');
     setTimeout(() => document.getElementById(player).classList.remove('grey-glow'), 500);
-    document.getElementById('e').classList.add('grey-glow');
-    setTimeout(() => document.getElementById('e').classList.remove('grey-glow'), 500);
+    document.getElementById('borderE').classList.add('grey-glow');
+    setTimeout(() => document.getElementById('borderE').classList.remove('grey-glow'), 500);
 }
 
 //funciton that runs game
@@ -95,24 +106,38 @@ function fight(playerChoice) {
 function main() {
     //functions that take note of choice
 
-    rock_div.addEventListener('click', function () {
-        //console.log("rock pressed");
-        fight("r");
-    })
+        rock_div.addEventListener('click', function () {
+            //console.log("rock pressed");
+            fight("r");
+        })
 
-    paper_div.addEventListener('click', function () {
-        //console.log("paper pressed");
-        fight("p");
-    })
+        paper_div.addEventListener('click', function () {
+            //console.log("paper pressed");
+            fight("p");
+        })
 
-    scissors_div.addEventListener('click', function () {
-        //console.log("scissors pressed");
-        fight("s");
-    })
-}
+        scissors_div.addEventListener('click', function () {
+            //console.log("scissors pressed");
+            fight("s");
+        })
+
+        if(enemyScore == 3 || playerScore == 3){
+            replay();
+        }
+
+        }
 
 function startGame() {
     document.getElementById('introScreen').style.display = 'none';
+}
+
+function replay() {
+    document.getElementById('endScreen').style.display = 'none';
+    playerScore = 0;
+    enemyScore = 0;
+    playerScore_span.innerHTML = playerScore;
+    enemyScore_span.innerHTML = enemyScore;
+    document.getElementById('e').src = 'images/mystery.jpeg';
 }
 
 main();
